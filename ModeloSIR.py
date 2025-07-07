@@ -24,6 +24,9 @@ def run_simulation(num_pers_suseptibles, num_pers_infectadas, num_pers_recuperad
   susceptibles = num_pers_suseptibles
   infectadas = num_pers_infectadas
   recuperadas = num_pers_recuperadas
+  print("La epidemia tiene las siguientes caracteríticas inciales")
+  print(f"\tpoblacion_total: {poblacion_total}\n\tsusceptibles: {susceptibles}\n\tinfectadas: {infectadas}\n\trecuperadas :{recuperadas}\n\tdías:{dias}\n\tparametro de infección: {parametros_de_infeccion}\n\tparametro de recuperación: {parametros_de_recuperacion}\n")
+
 
   # Las condiciones iniciales
   y0 = [susceptibles, infectadas, recuperadas]
@@ -54,6 +57,8 @@ def graficacion(sol, dias_por_evaluar):
   I = sol[:, 1]  # Infectados
   R = sol[:, 2]  # Recuperados
 
+  print("Datos finales despues de " +str(round(dias_por_evaluar[-1])) + " días")
+  print(f"\n\tsusceptibles: {round(S[-1])}\n\tinfectadas: {round(I[-1])}\n\trecuperadas :{round(R[-1])}")
 
   #integrarlas a la grafica
   plt.plot(dias_por_evaluar,S, color='green', label='Susceptibles')
