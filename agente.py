@@ -30,22 +30,25 @@ class Person:
             self.state = "R"
 
 # Simulacion ABM
-def simulateABM(num_agents, days, base_infection_rate, recovery_rate):
+def simulateABM(num_agents, days, base_infection_rate, recovery_rate, initial_infected):
     population = [Person(i, random.randint(10, 80)) for i in range(num_agents)]
-    patient_zero = random.choice(population)
-    patient_zero.state = "I"
 
-    #Historial para graficación
+    # Infectar agentes iniciales
+    initial_patients = random.sample(population, initial_infected)
+    for p in initial_patients:
+        p.state = "I"
+
+    # Historial para graficación
     count = []
 
-    #Maximos
+    # Máximos
     max_counts = {
         "S": {"day": 0, "value": 0},
         "I": {"day": 0, "value": 0},
         "R": {"day": 0, "value": 0}
     }
 
-    # Simulacion por dias
+    # Simulación por días
     for day in range(days):
         for person in population:
             person.interact(population, base_infection_rate)
@@ -68,6 +71,7 @@ def simulateABM(num_agents, days, base_infection_rate, recovery_rate):
     return count, max_counts
 
 
+
 # Graficar el resultado
 def plot_count(count):
     days = range(1, len(count)+1)
@@ -87,7 +91,7 @@ def plot_count(count):
     plt.show()
 
 if __name__ == "__main__":
-    count, max_info = simulateABM(1000,100,0.7,0.1)
+    count, max_info = simulateABM(1000,100,0.4,0.1, 10)
     plot_count(count)
     print("\nMáximos alcanzados:")
     for state in ["S", "I", "R"]:
